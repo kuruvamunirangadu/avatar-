@@ -1,0 +1,2 @@
+# Add smplx to requirements for mesh generation
+smplx @ git+https://github.com/vchoutas/smplx.git

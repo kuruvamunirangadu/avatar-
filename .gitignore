@@ -1,0 +1,49 @@
+# Large model files (too large for GitHub)
+*.npz
+src/models/smplx/*.npz
+src/models/smplx/**/*.npz
+
+# Large datasets (too large for GitHub)
+data/raw/3DPW/
+data/raw/3DPeople_sample/
+
+# Cache directories
+.cache/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environment
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Output files
+output/*.html
+output/*.json
+output/*.glb
+output/*.obj
+
+# Cache
+.cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/

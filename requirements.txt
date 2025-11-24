@@ -1,0 +1,12 @@
+streamlit
+numpy
+opencv-python
+scikit-image
+scikit-learn
+Pillow
+matplotlib
+torch
+torchvision
+requests
+smplx==0.1.28
+pandas

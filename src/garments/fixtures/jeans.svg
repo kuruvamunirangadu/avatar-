@@ -1,0 +1,7 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'>
+  <rect width='100%' height='100%' fill='#ffffff' />
+  <g fill='#2b5d9a' stroke='#000' stroke-width='2'>
+    <path d='M80 40 L120 40 L140 80 L140 260 L120 260 L100 140 L90 140 L90 260 L80 260 Z' />
+    <path d='M220 40 L180 40 L160 80 L160 260 L180 260 L200 140 L210 140 L210 260 L220 260 Z' />
+  </g>
+</svg>
