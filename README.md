@@ -27,49 +27,149 @@ The project is designed as a research-oriented prototype for e-commerce applicat
 
 ## 📂 Project Structure
 
-
+```
 virtual-tryon/
-├── data/
-│ ├── raw/ # raw images, garments, SMPL models
-│ └── synthetic/ # synthetic renders for training
-├── notebooks/ # Jupyter experiments
-├── src/
-│ ├── app/ # Streamlit/Flask demo
-│ │ └── app.py
-│ ├── preprocessing/ # preprocessing modules
-│ │ └── preprocess.py
-│ ├── pose_shape/ # body pose + shape estimation
-│ │ └── smpl_estimator.py
-│ ├── avatar/ # avatar generation
-│ │ └── generate_mesh.py
-│ ├── garments/ # garment loading utilities
-│ │ ├── garment_loader.py # high-level garment generation API
-│ │ ├── templates.py # parametric templates (tee/shirt/jeans/dress)
-│ │ ├── size_chart.py # size chart parser (CSV/HTML)
-│ │ ├── materials.py # material property inference
-│ │ └── pifuhd_integration.py # optional PIFuHD async jobs
-│ ├── draping/ # physics-based draping system
-│ │ ├── drape.py # high-level draping API
-│ │ └── engine_adapters/
-│ │     └── blender_adapter.py # Blender Cloth engine integration
-│ ├── fit_model/ # fit evaluation metrics & model
-│ │ ├── fit_net.py
-│ │ └── fit_metrics.py
-│ ├── evaluation/ # evaluation and testing
-│ │ └── evaluate.py
-│ └── utils/ # helper functions
-│ └── render.py
-├── scripts/ # utility scripts
-│ ├── run_blender_drape.py # demo runner for draping system
-│ ├── inspect_glb.py # GLB validation tool
-│ ├── blender_enable_io_scene_obj.py # Blender addon helper
-│ ├── run_enable_io_scene_obj.bat # Windows batch wrapper
-│ └── enable_addon_README.md # addon setup instructions
-├── experiments/ # trained models, checkpoints
-├── requirements.txt # dependencies
-├── README.md # project documentation
-└── run_demo.sh # shortcut to launch demo
+├── .gitignore                          # Git ignore rules (large files, cache, models)
+├── README.md                           # This documentation
+├── requirements.txt                    # Python dependencies
+├── requirements-smplx.txt              # SMPL-X specific dependencies
+├── run_demo.sh                         # Launch script for Linux/Mac
+├── run_streamlit.bat                   # Launch script for Windows
+│
+├── src/                                # Main source code
+│   ├── app/
+│   │   ├── app.py                      # Streamlit web application
+│   │   └── avatar.code-workspace       # VS Code workspace configuration
+│   │
+│   ├── avatar/
+│   │   └── generate_mesh.py            # 3D avatar generation from 2D images
+│   │
+│   ├── preprocessing/
+│   │   └── preprocess.py               # Image preprocessing (background removal, keypoints)
+│   │
+│   ├── pose_shape/
+│   │   └── smpl_estimator.py           # Body pose & shape estimation (SMPL/SMPL-X)
+│   │
+│   ├── garments/
+│   │   ├── garment_loader.py           # High-level garment generation API
+│   │   ├── templates.py                # Parametric garment templates (tee, shirt, jeans, dress)
+│   │   ├── size_chart.py               # Size chart parser (CSV/HTML/dict)
+│   │   ├── materials.py                # Material property inference from text
+│   │   ├── pifuhd_integration.py       # Optional PIFuHD single-image 3D reconstruction
+│   │   └── fixtures/
+│   │       ├── jeans.svg               # SVG pattern for jeans
+│   │       └── tee.svg                 # SVG pattern for t-shirt
+│   │
+│   ├── draping/
+│   │   ├── drape.py                    # High-level draping API
+│   │   └── engine_adapters/
+│   │       └── blender_adapter.py      # Blender Cloth engine integration
+│   │
+│   ├── fit_model/
+│   │   ├── fit_net.py                  # Neural network for fit prediction
+│   │   └── fit_metrics.py              # Fit percentage calculation (penetration, distance, coverage)
+│   │
+│   ├── evaluation/
+│   │   └── evaluate.py                 # Evaluation scripts and metrics
+│   │
+│   ├── models/
+│   │   └── smplx/                      # SMPL-X model files (NOT included - see installation)
+│   │       ├── neutral/
+│   │       │   └── model.npz           # Download separately
+│   │       ├── male/
+│   │       │   └── model.npz           # Download separately
+│   │       └── female/
+│   │           └── model.npz           # Download separately
+│   │
+│   └── utils/
+│       └── render.py                   # Rendering utilities
+│
+├── scripts/                            # Utility and testing scripts
+│   ├── run_blender_drape.py            # Demo runner for draping system
+│   ├── inspect_glb.py                  # GLB file validation tool
+│   ├── inspect_smplx_npz.py            # SMPL-X model inspection
+│   ├── inspect_protobuf.py             # Protobuf inspection utility
+│   ├── check_mediapipe.py              # MediaPipe installation checker
+│   ├── download_smplx_models.py        # SMPL-X model download helper
+│   ├── test_generate_avatar.py         # Avatar generation test
+│   ├── blender_enable_io_scene_obj.py  # Blender addon helper
+│   ├── run_enable_io_scene_obj.bat     # Windows batch wrapper for addon
+│   └── enable_addon_README.md          # Addon setup instructions
+│
+├── tests/                              # Unit tests
+│   ├── test_generate_mesh.py           # Avatar generation tests
+│   ├── test_generate_mesh_helpers.py   # Helper function tests
+│   ├── test_garment_templates.py       # Garment template tests
+│   ├── test_size_chart_and_materials.py # Size chart and material tests
+│   ├── test_pifuhd_integration.py      # PIFuHD integration tests
+│   └── test_blender_adapter_stub.py    # Blender adapter tests
+│
+├── data/                               # Data files
+│   ├── raw/
+│   │   ├── size_chart.csv              # Sample size chart data
+│   │   ├── 3DPW/                       # 3D Poses in the Wild dataset (excluded from git)
+│   │   ├── 3DPeople_sample/            # 3D People dataset samples (excluded from git)
+│   │   └── DeepFashion-MultiModal/
+│   │       └── assets/                 # DeepFashion dataset assets
+│   │           ├── README.md
+│   │           ├── dataset_overview.png
+│   │           ├── keypoints_definition.png
+│   │           └── logo.png
+│   │
+│   ├── synthetic/                      # Synthetic renders for training (future)
+│   └── pifuhd_jobs/                    # PIFuHD reconstruction job data
+│       └── [job-id]/
+│           └── job.json                # Job metadata
+│
+├── output/                             # Generated outputs
+│   ├── *.json                          # Fit metrics and metadata
+│   ├── *.html                          # Visualization files
+│   └── *.glb                           # 3D models (not tracked)
+│
+├── external/                           # External dependencies
+│   └── smplx_repo/
+│       └── smplx-main/                 # SMPL-X library source code
+│           ├── smplx/                  # Core SMPL-X implementation
+│           ├── examples/               # Example scripts
+│           ├── tools/                  # Utility tools
+│           ├── transfer_model/         # Model transfer tools
+│           └── requirements.txt        # SMPL-X requirements
+│
+└── .cache/                             # Cache directory (excluded from git)
+    └── avatars/                        # Cached avatar meshes
+```
 
+### Key Directories Explained
+
+- **`src/`**: Core application code organized by functionality
+  - `app/`: Web interface (Streamlit)
+  - `avatar/`: 3D avatar generation from 2D images
+  - `garments/`: Garment reconstruction and template generation
+  - `draping/`: Physics-based cloth simulation
+  - `fit_model/`: Fit percentage calculation and prediction
+  
+- **`scripts/`**: Standalone utility scripts for testing and validation
+
+- **`tests/`**: Unit tests for all major components
+
+- **`data/`**: Dataset storage (large datasets excluded from repository)
+
+- **`output/`**: Generated files from try-on sessions
+
+- **`external/`**: Third-party dependencies and libraries
+
+- **`.cache/`**: Runtime cache (automatically created, not tracked)
+
+### Files Excluded from Repository
+
+The following large files are excluded via `.gitignore`:
+- SMPL-X model files (`*.npz` files > 100MB each)
+- Large datasets (3DPW, 3DPeople_sample)
+- Cache files (`.cache/`)
+- Python bytecode (`__pycache__/`, `*.pyc`)
+- Generated outputs (`.glb`, large `.html` files)
+
+See [Installation](#-installation) section for instructions on downloading required model files.
 
 ---
 
